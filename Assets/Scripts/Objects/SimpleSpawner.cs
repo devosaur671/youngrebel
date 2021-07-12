@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SimpleSpawner : MonoBehaviour
 {
@@ -13,16 +11,22 @@ public class SimpleSpawner : MonoBehaviour
     float timeBetween;
     void Update()
     {
-        if (timeBetween <= 0 && amount >= 1)
+        if (ObjectToSpawn.Length > 0)
         {
-            int randomObject = Random.Range(0, ObjectToSpawn.Length);
-            int randomPosition = Random.Range(0, SpawnPositions.Length);
+            if (ObjectToSpawn.Length > 0)
+            {
+                if (timeBetween <= 0 && amount >= 1)
+                {
+                    int randomObject = Random.Range(0, ObjectToSpawn.Length);
+                    int randomPosition = Random.Range(0, SpawnPositions.Length);
 
-            Instantiate(ObjectToSpawn[randomObject], SpawnPositions[randomPosition].position, transform.rotation);
-            timeBetween = Random.Range(minStartTime, maxStartTime);
-            amount--;
+                    Instantiate(ObjectToSpawn[randomObject], SpawnPositions[randomPosition].position, transform.rotation);
+                    timeBetween = Random.Range(minStartTime, maxStartTime);
+                    amount--;
+                }
+                else
+                    timeBetween -= Time.deltaTime;
+            }
         }
-        else
-            timeBetween -= Time.deltaTime;
     }
 }
